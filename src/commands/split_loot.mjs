@@ -26,7 +26,7 @@ export default {
         const name = interaction.options.getString("party");
         const gold = interaction.options.getInteger("gold");
 
-        const party = await Party.findOne({ where: { name } });
+        const party = await Party.findOne({ where: { name, guildId: interaction.guild.id } });
         if (!party) {
             await interaction.reply({ content: "Oe ctm esa party no existe", ephemeral: true });
             return;

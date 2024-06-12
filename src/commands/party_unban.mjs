@@ -1,23 +1,22 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import Party from "../models/party.mjs";
 import User from "../models/user.mjs";
 import UserParty from "../models/userParty.mjs";
 
 export default {
     data: new SlashCommandBuilder()
-        .setName("partyban")
-        .setDescription("Banea un usuario de la party")
-        .addUserOption(option =>
+        .setName("partyunban")
+        .setDescription("Desbanea a un usuario de una party")
+        .addUserOption(option => 
             option.setName("user")
-                .setDescription("The user to ban")
+                .setDescription("The user to unban")
                 .setRequired(true)
         )
-        .addStringOption(option =>
+        .addStringOption(option => 
             option.setName("party")
-                .setDescription("The party to ban the user from")
+                .setDescription("The party to unban the user from")
                 .setRequired(true)
-        )
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageEvents),
+        ),
     execute: async (interaction) => {
         const discordUser = interaction.options.getUser("user");
         const name = interaction.options.getString("party");
@@ -33,12 +32,12 @@ export default {
             user = await User.create({ discordId: discordUser.id, username: discordUser.username });
 
         let userParty = await UserParty.findOne({ where: { userId: user.id, partyId: party.id }});
-        if (userParty) {
-            userParty.type = "BANNED";
-            await userParty.save();
-        } else
-            userParty = await UserParty.create({ userId: user.id, partyId: party.id, type: "BANNED"});
+        if (!userParty || userParty.type != "BANNED") {
+            await interaction.reply({ content: "Oe ctm ese usuario no esta baneado", ephemeral: true });
+            return;
+        }
 
-        await interaction.reply({ content: "Oe ctm banneado", ephemeral: true });
+        party.removeUser(user);
+        await interaction.reply({ content: "Oe ctm desbaneado", ephemeral: true });
     }
 };

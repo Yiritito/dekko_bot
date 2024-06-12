@@ -6,7 +6,9 @@ export default {
     id: "join_party",
     execute: async (interaction) => {
         const messageId = interaction.message.id;
-        const party = await Party.findOne({ where: { messageId } });
+        const channelId = interaction.channel.id;
+        const guildId = interaction.guild.id;
+        const party = await Party.findOne({ where: { messageId, channelId, guildId } });
         if (!party) {
             await interaction.reply({ content: "Oe ctm este error no es normal, reportalo con un admin", ephemeral: true });
             return;

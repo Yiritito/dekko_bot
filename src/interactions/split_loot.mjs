@@ -20,7 +20,9 @@ export default {
         }
 
         const messageId = interaction.message.id;
-        const party = await Party.findOne({ where: { messageId } });
+        const channelId = interaction.channel.id;
+        const guildId = interaction.guild.id;
+        const party = await Party.findOne({ where: { messageId, channelId, guildId } });
         if( !party ) {
             await interaction.reply({ content: "Oe ctm este error no es normal.\nAbre Ticket", ephemeral: true });
             return;
