@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { Colors, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import Party from "../models/party.mjs";
 import User from "../models/user.mjs";
 
@@ -38,7 +38,14 @@ export default {
             }]
         });
         const goldPerUser = (gold - (gold * 0.05)) / users.length;
-        const usernames = users.map(user => user.username).join(", ");
-        await interaction.reply({ content: `Le tocan $${goldPerUser} a los jugadores:\n${usernames}`, ephemeral: true });
+        const usernames = users.map(user => user.username).join("\n* ");
+
+        const embed = new EmbedBuilder()
+            .setColor(Colors.Green)
+            .setTitle("Repartición de Loot")
+            .setDescription(`Le tocan $${goldPerUser} a los jugadores:\n* ${usernames}`)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed] });
     }
 };
