@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import Party from "../models/party.mjs";
 import User from "../models/user.mjs";
 
@@ -10,7 +10,8 @@ export default {
             option.setName("party")
                 .setDescription("The party to list")
                 .setRequired(true)
-        ),
+        )
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageEvents),
     execute: async (interaction) => {
         const name = interaction.options.getString("party");
 

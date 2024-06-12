@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { Colors, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import Party from "../models/party.mjs";
 import User from "../models/user.mjs";
 
@@ -15,7 +15,8 @@ export default {
             option.setName("gold")
                 .setDescription("The gold to split")
                 .setRequired(true)
-        ),
+        )
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageEvents),
     execute: async (interaction) => {
         const name = interaction.options.getString("party");
         const gold = interaction.options.getInteger("gold");

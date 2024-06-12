@@ -1,5 +1,5 @@
 import Party from "../models/party.mjs";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -14,7 +14,8 @@ export default {
             option.setName("channel")
                 .setDescription("The channel to create the party in")
                 .setRequired(false)
-        ),
+        )
+        .setDefaultMemberPermissions(PermissionFlagsBits.CreateEvents),
     execute: async (interaction) => {
         const name = interaction.options.getString("name");
         const channel = interaction.options.getChannel("channel") || interaction.channel;

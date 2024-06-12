@@ -1,6 +1,6 @@
 import Party from "../models/party.mjs";
 import UserParty from "../models/userParty.mjs";
-import { SlashCommandBuilder } from "discord.js";
+import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -15,7 +15,8 @@ export default {
             option.setName("party")
                 .setDescription("The party to ban the user from")
                 .setRequired(true)
-        ),
+        )
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageEvents),
     execute: async (interaction) => {
         const user = interaction.options.getUser("user");
         const name = interaction.options.getString("party");
