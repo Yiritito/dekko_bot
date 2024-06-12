@@ -1,0 +1,20 @@
+{
+  "name": "dekko_bot",
+  "version": "1.0.0",
+  "description": "Dekko Conchetumare Encuerate",
+  "main": "src/index.mjs",
+  "scripts": {
+    "dev": "node src/index.mjs"
+  },
+  "author": "Yin",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.4.0"
+  }
+}
