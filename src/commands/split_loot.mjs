@@ -16,6 +16,11 @@ export default {
                 .setDescription("The gold to split")
                 .setRequired(true)
         )
+        .addIntegerOption(option =>
+            option.setName("comission")
+                .setDescription("The comission to leader")
+                .setRequired(false)
+        )
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageEvents),
     execute: async (interaction) => {
         const name = interaction.options.getString("party");
@@ -38,7 +43,9 @@ export default {
                 }
             }]
         });
-        const goldPerUser = (gold - (gold * 0.05)) / users.length;
+        const comissionPercentage = interaction.options.getInteger("comission") || 5;
+        const comission = gold * (comissionPercentage / 100);
+        const goldPerUser = (gold - comission) / users.length;
         const usernames = users.map(user => user.username).join("\n* ");
 
         const embed = new EmbedBuilder()
@@ -47,6 +54,7 @@ export default {
             .setDescription(`Le tocan $${goldPerUser} a los jugadores:\n* ${usernames}`)
             .setTimestamp();
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.channel.send({ embeds: [embed] });
+        await interaction.reply(`Tu comisión es de $${comission}`);
     }
 };

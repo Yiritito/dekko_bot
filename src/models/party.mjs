@@ -11,6 +11,14 @@ Party.init({
     messageId: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    channelId: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    guildId: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     sequelize,

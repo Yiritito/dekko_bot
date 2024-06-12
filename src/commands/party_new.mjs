@@ -29,18 +29,25 @@ export default {
             )
             .setColor(Colors.Green);
         
-        const button = new ButtonBuilder()
+        const buttonJoin = new ButtonBuilder()
             .setLabel("Me uno pe causa")
             .setStyle(ButtonStyle.Primary)
             .setCustomId("join_party");
         
-        const row = new ActionRowBuilder().addComponents(button);
+        const buttonSplit = new ButtonBuilder()
+            .setLabel("Dividir loot")
+            .setStyle(ButtonStyle.Secondary)
+            .setCustomId("split_modal");
+
+        const row = new ActionRowBuilder().addComponents(buttonJoin, buttonSplit);
 
         const message = await channel.send({ embeds: [embed], components: [row]});
 
         const party = await Party.create({
             name,
             messageId: message.id,
+            channelId: channel.id,
+            guildId: interaction.guild.id
         });
 
         if (!party) {

@@ -11,6 +11,7 @@ const { TOKEN } = process.env;
 const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
+
 client.commands = commandsCollection;
 client.interactions = interactionsCollection;
 registerEvents(client);
